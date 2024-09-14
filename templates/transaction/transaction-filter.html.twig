@@ -1,0 +1,57 @@
+<div class="modal fade" id="transactionFilterModal" tabindex="-1" aria-labelledby="transactionFilterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionFilterModalLabel">Filtrer les transactions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mt-3">
+                {# {{ form(transactionFilterForm) }} #}
+                    {{ form_start(transactionFilterForm) }}
+
+                        <div class="d-flex justify-content-between">
+                            <div class="w-50 me-1">
+                                {{ form_label(transactionFilterForm.datemin) }}
+                                {{ form_widget(transactionFilterForm.datemin, {'attr': {'class': 'form-control'}}) }}                            
+                            </div>   
+                            <div class="w-50 ms-1">
+                                {{ form_label(transactionFilterForm.datemax) }}
+                                {{ form_widget(transactionFilterForm.datemax, {'attr': {'class': 'form-control'}}) }}                                         
+                            </div>                         
+                        </div>
+
+                        {{ form_label(transactionFilterForm.name) }}
+                        {{ form_widget(transactionFilterForm.name, {'attr': {'class': 'form-control'}}) }}
+
+                        <div class="d-flex justify-content-between">
+                            <div class="w-50 me-1">
+                                {{ form_label(transactionFilterForm.amountmin) }}
+                                {{ form_widget(transactionFilterForm.amountmin, {'attr': {'class': 'form-control'}}) }}
+                            </div>   
+                            <div class="w-50 ms-1">
+                                {{ form_label(transactionFilterForm.amountmax) }}
+                                {{ form_widget(transactionFilterForm.amountmax, {'attr': {'class': 'form-control'}}) }}
+                            </div>                         
+                        </div>
+
+                        {{ form_widget(transactionFilterForm.submit, {'attr': {'class': 'btn pi-bg text-white mt-3'}}) }}
+
+                        {% set queryParams = app.request.query.all %}
+
+                        {% for key, value in queryParams %}
+                            {% if key != 'transaction_filter' %}
+                                <input type="hidden" name="{{ key }}" value="{{ value }}">
+                            {% else %}
+                                {% for vkey, vvalue in value %}
+                                    <input type="hidden" name="{{ vkey }}" value="{{ vvalue }}">
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+
+                    {{ form_end(transactionFilterForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

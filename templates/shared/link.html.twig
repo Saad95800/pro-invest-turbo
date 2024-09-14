@@ -1,0 +1,13 @@
+{% if i == actualPage %}
+    <span class="d-flex flex-column align-items-center page-link color-blue-link px-1 position-relative">
+        {{ i }}
+        <div class="position-absolute w-100" style="top: 21px">
+            <div class="link-pagination-bottomline m-auto"></div>
+        </div>
+    </span>
+{% else %}
+    {% set newParams = currentParams | merge({'page': i}) %}
+    <a href="{{ path(route_pagination, newParams) }}" class="d-flex page-link px-1 text-decoration-none">
+        {{ i }}
+    </a>
+{% endif %}

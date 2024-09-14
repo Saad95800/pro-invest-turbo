@@ -1,0 +1,67 @@
+<div class="modal fade left" id="bankAccountModal" tabindex="-1" aria-labelledby="bankAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bankAccountModalLabel">Ajouter un compte bancaire</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mt-3">
+                    <form method="post" action="{{ path('user_item', {'id': user.id}) }}">
+                        {{ form_label(bankAccountForm.name) }}
+                        {{ form_widget(bankAccountForm.name, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(bankAccountForm.name) %}
+                            <div class="invalid-message text-danger">
+                                {{ form_errors(bankAccountForm.name) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_label(bankAccountForm.iban) }}
+                        {{ form_widget(bankAccountForm.iban, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(bankAccountForm.iban) %}
+                            <div class="invalid-message text-danger">
+                                {{ form_errors(bankAccountForm.iban) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_label(bankAccountForm.bic) }}
+                        {{ form_widget(bankAccountForm.bic, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(bankAccountForm.bic) %}
+                            <div class="invalid-message text-danger">
+                                {{ form_errors(bankAccountForm.bic) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_label(bankAccountForm.address) }}
+                        {{ form_widget(bankAccountForm.address, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(bankAccountForm.address) %}
+                            <div class="invalid-message text-danger">
+                                {{ form_errors(bankAccountForm.address) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_label(bankAccountForm.lastname) }}
+                        {{ form_widget(bankAccountForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(bankAccountForm.lastname) %}
+                            <div class="invalid-message text-danger">
+                                {{ form_errors(bankAccountForm.lastname) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_label(bankAccountForm.firstname) }}
+                        {{ form_widget(bankAccountForm.firstname, {'attr': {'class': 'form-control'}}) }}
+                        {% if form_errors(bankAccountForm.firstname) %}
+                            <div class="invalid-message text-danger">
+                                {{ form_errors(bankAccountForm.firstname) }}
+                            </div>
+                        {% endif %}
+
+                        {{ form_widget(bankAccountForm.submit, {'attr': {'class': 'btn pi-bg text-white mt-3'}}) }}
+
+                        <input type="hidden" name="_csrf_token_bank_account_user" value="{{ csrf_token('user_bank_account_form') }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

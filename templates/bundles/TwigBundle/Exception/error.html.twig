@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <h1 class="display-1 text-danger">Erreur</h1>
+                        <h2 class="display-4">{{ exception.message }}</h2>
+                        <p>Vous pouvez retourner à la <a href="{{ path('app_index') }}" class="btn pi-bg text-white">page d'accueil</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

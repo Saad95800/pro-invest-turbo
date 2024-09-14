@@ -1,0 +1,14 @@
+{% set current_route = app.request.attributes.get('_route') %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container h-100 d-flex justify-content-between">
+        <img src="/images/pro-invest-logo.png" class="logo" />
+        <div class="d-flex flex-row-reverse w-100 h-100">
+            <div class="d-flex align-items-center">
+                <a href="/users" class="nav-link-custom h-100 {{ current_route == 'user_list' ? 'nav-link-custom-active' : '' }} mx-3 text-decoration-none display-flex-center">Utilisateurs</a>
+                <a href="/projects" class="nav-link-custom h-100 {{ current_route == 'project_list' ? 'nav-link-custom-active' : '' }} mx-3 text-decoration-none display-flex-center">Projets</a>
+                <a href="/transactions" class="nav-link-custom h-100 {{ current_route == 'transaction_list' ? 'nav-link-custom-active' : '' }} mx-3 text-decoration-none display-flex-center">Opérations financières</a>
+            </div>
+        </div>
+    </div>
+</nav>

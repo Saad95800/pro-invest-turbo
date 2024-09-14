@@ -1,0 +1,14 @@
+parameters:
+    #123456
+    hash: $2y$13$v/m6UyQyWwef3uaLNisKGOJa083RSoK7msjE9Maiw4g03UNL.DIQS
+
+App\Entity\User:
+    user_{1..120}:
+        email: '<current()>@<current()>.fr'
+        password: <{hash}>
+        firstname: <fr_FR:firstname()>
+        lastname: <fr_FR:lastName()>
+        phone: <fr_FR:phoneNumber()>
+        role: 'ROLE_USER'
+        birthDate: <dateTimeBetween('-70 years', '-18 years')>
+        createDate: <dateTimeBetween('2020-01-01', 'now')>

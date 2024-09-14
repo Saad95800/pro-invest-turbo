@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vue d'ensemble{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between">
+        <h1 class="text-center fw-bold">Utilisateurs</h1>
+        <a href="{{ path('user_add') }}" class="btn pi-bg text-white" style="height: 39px">Ajouter</a>
+    </div>
+    <div>
+        <button type="button" class="btn pi-bg text-white me-1" style="height: 39px;" data-bs-toggle="modal" data-bs-target="#userFilterModal">Filtrer</a>
+    </div>
+    {% set currentParams = app.request.query.all %}
+    <div class="mt-3 border px-3 pb-3 rounded-2 bg-white">
+        <table class="table table-sm mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        {% set newParamsOrderId = currentParams | merge({'orderId': 1}) | merge({'orderFirstname': null}) | merge({'orderLastname': null}) | merge({'orderEmail': null}) | merge({'orderPhone': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderId = newParamsOrderId | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderId = newParamsOrderId | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('user_list', newParamsOrderId) }}" class="text-black text-decoration-none">
+                            id
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderId is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }}  cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderLastname = currentParams | merge({'orderId': null}) | merge({'orderLastname': 1}) | merge({'orderFirstname': null}) | merge({'orderEmail': null}) | merge({'orderPhone': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderLastname = newParamsOrderLastname | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderLastname = newParamsOrderLastname | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('user_list', newParamsOrderLastname) }}" class="text-black text-decoration-none">
+                            Nom
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderLastname is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }}  cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderFirstname = currentParams | merge({'orderId': null}) | merge({'orderLastname': null}) | merge({'orderFirstname': 1}) | merge({'orderEmail': null}) | merge({'orderPhone': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderFirstname = newParamsOrderFirstname | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderFirstname = newParamsOrderFirstname | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('user_list', newParamsOrderFirstname) }}" class="text-black text-decoration-none">
+                            Prénom
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderFirstname is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }}  cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderEmail = currentParams | merge({'orderId': null}) | merge({'orderLastname': null}) | merge({'orderFirstname': null}) | merge({'orderEmail': 1}) | merge({'orderPhone': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderEmail = newParamsOrderEmail | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderEmail = newParamsOrderEmail | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('user_list', newParamsOrderEmail) }}" class="text-black text-decoration-none">
+                            Email
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderEmail is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }}  cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderPhone = currentParams | merge({'orderId': null}) | merge({'orderLastname': null}) | merge({'orderFirstname': null}) | merge({'orderEmail': null}) | merge({'orderPhone': 1}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderPhone = newParamsOrderPhone | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderPhone = newParamsOrderPhone | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('user_list', newParamsOrderPhone) }}" class="text-black text-decoration-none">
+                            Téléphone
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderPhone is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }}  cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+
+                    <tr class="cursor-pointer">
+                        <th scope="row">{{ user.id }}</th>
+                        <th><a href="{{ path('user_item', { 'id': user.id }) }}" class="pi-color">{{ user.lastname }}</a></th>
+                        <td><a href="{{ path('user_item', { 'id': user.id }) }}" class="pi-color">{{ user.firstname }}</a></td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    {% include 'shared/links-pagination.html.twig' %}
+
+    {% include 'user/user-filter.html.twig' %}
+
+{% endblock %}

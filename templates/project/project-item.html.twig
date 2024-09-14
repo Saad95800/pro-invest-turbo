@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ project.name }} {% endblock %}
+
+{% block body %}    
+<div class="container mt-5">
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn pi-bg text-white me-1" style="height: 39px;" data-bs-toggle="modal" data-bs-target="#dividendModal">Verser des dividendes</a>
+    </div>
+    <div class="card mx-auto" style="max-width: 600px; min-height: 500px;">
+        <div class="card-header text-center">
+            {% if project.image %}
+                <img src="{{ asset(projects_images_path ~ project.image.path) }}" alt="Image du projet {{ project.name }}" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+            {% endif %}
+        </div>
+        <div class="card-body ps-5 d-flex flex-column justify-content-between">
+            <div>
+                <h2>{{ project.name }}</h2>
+                <p class="text-muted mb-1 my-3"><strong>Catégorie:</strong> {{ categories[project.category] }}</p>
+                <p class="text-muted mb-1 my-3"><strong>Risque:</strong> {{ risks[project.risk] }} </p>
+                <p class="text-muted mb-1 my-3"><strong>Statut:</strong> {{ project.status ? 'Inactif' : 'Actif' }} </p>            
+                <p class="text-muted mb-1 my-3"><strong>Rendement:</strong> {{ project.yield }} % </p>            
+                <p class="text-muted mb-1 my-3"><strong>Ancienneté:</strong> {{ project.age }} an{{ project.age > 1 ? 's' : '' }} </p>       
+                <p class="text-muted mb-1 my-3"><strong>Description:</strong> </p>
+                <p>{{ project.description|raw }}</p>     
+            </div>
+            <div>
+                <h5>Transactions financières des 6 derniers mois</h5>
+                <canvas id="financeChart" width="400" height="200"></canvas> 
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="{{ path('project_update', {id: project.id}) }}" class="btn pi-bg text-white mt-2">Modifier</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'project/dividend-form.html.twig' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('financeChart').getContext('2d');
+            var chartLabels = {{ chart_labels|json_encode|raw }};
+            var investmentData = {{ investment_data|json_encode|raw }};
+            var dividendsData = {{ dividends_data|json_encode|raw }};
+
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: chartLabels,
+                    datasets: [
+                        {
+                            label: 'Investissements',
+                            data: investmentData,
+                            backgroundColor: '#000',
+                            borderColor: 'rgba(0, 0, 0, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Dividendes',
+                            data: dividendsData,
+                            backgroundColor: '#0e7e00',
+                            borderColor: 'rgba(0, 128, 0, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vue d'ensemble{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Utilisateurs</h1>
+
+    <table class="table table-sm">
+        <thead>
+            <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Téléphone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <th scope="row">{{ user.lastname }}</th>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

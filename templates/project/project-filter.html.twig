@@ -1,0 +1,68 @@
+<div class="modal fade" id="projectFilterModal" tabindex="-1" aria-labelledby="projectFilterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="projectFilterModalLabel">Filtrer les projets</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group mt-3">
+                {# {{ form(projectFilterForm) }} #}
+                    {{ form_start(projectFilterForm) }}
+
+                        {{ form_label(projectFilterForm.name) }}
+                        {{ form_widget(projectFilterForm.name, {'attr': {'class': 'form-control'}}) }}
+
+                        <div>
+                            <p>Ancienneté</p>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    {{ form_label(projectFilterForm.agemin) }}
+                                    {{ form_widget(projectFilterForm.agemin, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div>
+                                    {{ form_label(projectFilterForm.agemax) }}
+                                    {{ form_widget(projectFilterForm.agemax, {'attr': {'class': 'form-control'}}) }}      
+                                </div>                  
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>Rendement</p>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    {{ form_label(projectFilterForm.yieldmin) }}
+                                    {{ form_widget(projectFilterForm.yieldmin, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                                <div>
+                                    {{ form_label(projectFilterForm.yieldmax) }}
+                                    {{ form_widget(projectFilterForm.yieldmax, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        {{ form_label(projectFilterForm.risk) }}
+                        {{ form_widget(projectFilterForm.risk, {'attr': {'class': 'form-control'}}) }}
+
+                        {{ form_widget(projectFilterForm.submit, {'attr': {'class': 'btn pi-bg text-white mt-3'}}) }}
+
+                        {# On récupère les paramètres d'url pour les réinjecter dans le formulaire #}
+                        {% set queryParams = app.request.query.all %}
+
+                        {% for key, value in queryParams %}
+                            {% if key != 'project_filter' %}
+                                <input type="hidden" name="{{ key }}" value="{{ value }}">
+                            {% else %}
+                                {% for vkey, vvalue in value %}
+                                    <input type="hidden" name="{{ vkey }}" value="{{ vvalue }}">
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+
+                    {{ form_end(projectFilterForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

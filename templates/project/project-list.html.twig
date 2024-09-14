@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projets{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between">
+        <h1 class="text-center fw-bold">Projets</h1>
+        <a href="{{ path('project_add') }}" class="btn pi-bg text-white" style="height: 39px">Ajouter</a>
+    </div>
+    <div>
+        <button type="button" class="btn pi-bg text-white me-1" style="height: 39px;" data-bs-toggle="modal" data-bs-target="#projectFilterModal">Filtrer</a>
+    </div>
+    {% set currentParams = app.request.query.all %}
+    <div class="mt-3 border px-3 pb-3 rounded-2 bg-white">
+        <table class="table table-sm mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        {% set newParamsOrderId = currentParams | merge({'orderId': 1}) | merge({'orderName': null}) | merge({'orderAge': null}) | merge({'orderYield': null}) | merge({'orderRisk': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderId = newParamsOrderId | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderId = newParamsOrderId | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('project_list', newParamsOrderId) }}" class="text-black text-decoration-none">
+                            id
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderId is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }} cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderName = currentParams | merge({'orderId': null}) | merge({'orderName': 1}) | merge({'orderAge': null}) | merge({'orderYield': null}) | merge({'orderRisk': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderName = newParamsOrderName | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderName = newParamsOrderName | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('project_list', newParamsOrderName) }}" class="text-black text-decoration-none">
+                            Nom
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderName is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }} cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderAge = currentParams | merge({'orderId': null}) | merge({'orderName': null}) | merge({'orderAge': 1}) | merge({'orderYield': null}) | merge({'orderRisk': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderAge = newParamsOrderAge | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderAge = newParamsOrderAge | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('project_list', newParamsOrderAge) }}" class="text-black text-decoration-none">
+                            Ancienneté
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderAge is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }} cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderYield = currentParams | merge({'orderId': null}) | merge({'orderName': null}) | merge({'orderAge': null}) | merge({'orderYield': 1}) | merge({'orderRisk': null}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderYield = newParamsOrderYield | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderYield = newParamsOrderYield | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('project_list', newParamsOrderYield) }}" class="text-black text-decoration-none">
+                            Rendement
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderYield is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }} cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {% set newParamsOrderRisk = currentParams | merge({'orderId': null}) | merge({'orderName': null}) | merge({'orderAge': null}) | merge({'orderYield': null}) | merge({'orderRisk': 1}) %}
+                        {% if app.request.query.all.order is defined and app.request.query.all.order == 'ASC' %}
+                            {% set newParamsOrderRisk = newParamsOrderRisk | merge({'order': 'DESC'}) %}
+                        {% else %}
+                            {% set newParamsOrderRisk = newParamsOrderRisk | merge({'order': 'ASC'}) %}
+                        {% endif %}
+                        <a href="{{ path('project_list', newParamsOrderRisk) }}" class="text-black text-decoration-none">
+                            Risque
+                            {% if app.request.query.all.order is defined and app.request.query.all.orderRisk is defined %}
+                                <i class="bi {{ app.request.query.all.order == 'ASC' ? 'bi-arrow-down' : 'bi-arrow-up' }} cursor-pointer"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+
+                    <tr>
+                        <th scope="row">{{ project.id }}</th>
+                        <th><a href="{{ path('project_item', { 'id': project.id }) }}" class="pi-color">{{ project.name }}</a></th>
+                        <td>{{ project.age }}</td>
+                        <td>{{ project.yield }}</td>
+                        <td>{{ risks[project.risk] }}</td>
+                    </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% include 'shared/links-pagination.html.twig' %}
+
+    {% include 'project/project-filter.html.twig' %}
+
+{% endblock %}

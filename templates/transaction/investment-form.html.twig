@@ -1,0 +1,41 @@
+<div class="modal fade right" id="investmentModal" tabindex="-1" aria-labelledby="investmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="investmentModalLabel">Créer un investissement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    {{ form_label(form.project) }}
+                    {{ form_widget(form.project, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.project) %}
+                        <div class="invalid-message text-danger">
+                            {{ form_errors(form.project) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_label(form.user) }}
+                    {{ form_widget(form.user, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.user) %}
+                        <div class="invalid-message text-danger">
+                            {{ form_errors(form.user) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_label(form.amount) }}
+                    {{ form_widget(form.amount, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.amount) %}
+                        <div class="invalid-message text-danger">
+                            {{ form_errors(form.amount) }}
+                        </div>
+                    {% endif %}
+
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn pi-bg text-white mt-3'}}) }}
+
+                    <input type="hidden" name="_csrf_token_transaction_user" value="{{ csrf_token('user_investment_form') }}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

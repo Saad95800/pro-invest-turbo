@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+
+    <h1>{{ page == 'add' ? 'Ajouter un utilisateur' : "Modifier l'utilisateur " ~ user.firstname|lower|capitalize ~ ' ' ~ user.lastname|upper }}</h1>
+
+    {{ form_start(form) }}
+
+    {# {% if form.vars.errors|length > 0 %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+        </div>
+    {% endif %} #}
+
+    <div class="form-group mt-3">
+        {{ form_label(form.lastname) }}
+        {% set input_class_lastname = form_errors(form.lastname) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.lastname, {'attr': {'class': 'form-control ' ~ input_class_lastname }}) }}
+        {% if form_errors(form.lastname) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.lastname) }}
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="form-group mt-3">
+        {{ form_label(form.firstname) }}
+        {% set input_class_firstname = form_errors(form.firstname) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.firstname, {'attr': {'class': 'form-control ' ~ input_class_firstname }}) }}
+        {% if form_errors(form.firstname) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.firstname) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.email) }}
+        {% set input_class_email = form_errors(form.email) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control ' ~ input_class_email }}) }}
+        {% if form_errors(form.email) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.email) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.phone) }}
+        {% set input_class_phone = form_errors(form.phone) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.phone, {'attr': {'class': 'form-control ' ~ input_class_phone }}) }}
+        {% if form_errors(form.phone) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.phone) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.password.first) }}
+        {% set input_class_password_first = form_errors(form.password.first) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.password.first, {'attr': {'class': 'form-control ' ~ input_class_password_first }}) }}
+
+        {{ form_label(form.password.second) }}
+        {% set input_class_password_second = form_errors(form.password.first) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.password.second, {'attr': {'class': 'form-control ' ~ input_class_password_second }}) }}
+        {% if form_errors(form.password.first) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.password.first) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.image) }}
+        {% set input_class_image = form_errors(form.image) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control ' ~ input_class_image }}) }}
+        {% if form_errors(form.image) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.image) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_widget(form.submit, {'attr': {'class': 'btn pi-bg text-white'}}) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

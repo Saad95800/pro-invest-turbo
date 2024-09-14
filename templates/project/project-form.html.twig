@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des projets{% endblock %}
+
+{% block body %}
+
+    <h1 class="fw-bold">{{ page == 'add' ? 'Ajouter un projet' : "Modifier le projet " ~ project.name|lower|capitalize }}</h1>
+
+    {{ form_start(form) }}
+
+    {% if form.vars.errors|length > 0 %}
+        <div class="alert alert-danger">
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
+    <div class="form-group mt-3">
+        {{ form_label(form.image) }}
+        {% set input_class_image = form_errors(form.image) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control ' ~ input_class_image }}) }}
+        {% if form_errors(form.image) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.image) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.name) }}
+        {% set input_class_name = form_errors(form.name) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.name, {'attr': {'class': 'form-control ' ~ input_class_name }}) }}
+        {% if form_errors(form.name) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.name) }}
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="form-group mt-3">
+        {{ form_label(form.category) }}
+        {% set input_class_category = form_errors(form.category) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.category, {'attr': {'class': 'form-control ' ~ input_class_category }}) }}
+        {% if form_errors(form.category) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.category) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.risk) }}
+        {% set input_class_risk = form_errors(form.risk) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.risk, {'attr': {'class': 'form-control ' ~ input_class_risk }}) }}
+        {% if form_errors(form.risk) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.risk) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.status) }}
+        {% set input_class_status = form_errors(form.status) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.status, {'attr': {'class': 'form-control ' ~ input_class_status }}) }}
+        {% if form_errors(form.status) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.status) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.yield) }}
+        {% set input_class_yield = form_errors(form.yield) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.yield, {'attr': {'class': 'form-control ' ~ input_class_yield }}) }}
+        {% if form_errors(form.yield) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.yield) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.age) }}
+        {% set input_class_age = form_errors(form.age) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.age, {'attr': {'class': 'form-control ' ~ input_class_age }}) }}
+        {% if form_errors(form.age) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.age) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_label(form.description) }}
+        {% set input_class_description = form_errors(form.description) ? 'input-bg-error' : '' %}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control ' ~ input_class_description }}) }}
+        {% if form_errors(form.description) %}
+            <div class="invalid-message text-danger">
+                {{ form_errors(form.description) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mt-3">
+        {{ form_widget(form.submit, {'attr': {'class': 'btn pi-bg text-white'}}) }}
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

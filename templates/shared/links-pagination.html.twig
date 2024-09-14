@@ -1,0 +1,37 @@
+{% set currentParams = app.request.query.all %}
+
+{% set newParams1 = currentParams | merge({'page': 1}) %}
+<div class="row row-sm row-sm-h align-items-center justify-content-center mt-3">
+    <div class="col-auto">
+        <a href="{{ path(route_pagination, newParams1) }}" class="btn-arrow-pagination btn-light text-decoration-none">
+            <i class="bi bi-chevron-left"></i>
+        </a>
+    </div>
+    <div class="col-auto d-flex align-items-center">
+        {% if nbPages <= 10 %}
+            {% for i in 1..nbPages %}
+                {% include 'shared/link.html.twig' %}
+            {% endfor %}
+        {% else %}
+            {% if actualPage >= 1 and actualPage <= 9 %}
+                {% for i in 1..10 %}
+                    {% include 'shared/link.html.twig' %}
+                {% endfor %}
+            {% else %}
+                {% set limitI = actualPage == nbPages ? nbPages : actualPage + 1 %}
+
+                {% set start = actualPage - 8 %}
+
+                {% for i in start..limitI %}
+                    {% include 'shared/link.html.twig' %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="col-auto">
+        {% set newParams2 = currentParams | merge({'page': nbPages}) %}
+        <a href="{{ path(route_pagination, newParams2) }}" class="btn-arrow-pagination btn-light text-decoration-none">
+            <i class="bi bi-chevron-right"></i>
+        </a>
+    </div>
+</div>
