@@ -24,6 +24,7 @@ use App\Form\TransactionType;
 use App\Form\BankAccountType;
 use App\Form\UserFilterType;
 use App\Service\TransactionService;
+use Symfony\UX\Turbo\TurboBundle;
 
 class UserController extends AbstractController
 {
@@ -105,6 +106,7 @@ class UserController extends AbstractController
 
                 $this->addFlash('success', "Dépôt effectué avec succès.");
                 return $this->redirectToRoute('user_item', ['id' => $user->getId()]);
+                
             }else{
                 $this->addFlash('error', "Erreur lors de la création du dépôt.");
             }
@@ -125,8 +127,14 @@ class UserController extends AbstractController
                 $em->persist($bankAccount);
                 $em->flush();
 
-                $this->addFlash('success', "Compte bancaire ajouté avec succès.");
-                return $this->redirectToRoute('user_item', ['id' => $user->getId()]);
+                // $this->addFlash('success', "Compte bancaire ajouté avec succès.");
+                // return $this->redirectToRoute('user_item', ['id' => $user->getId()]);
+
+                if (TurboBundle::STREAM_FORMAT === $request->getPreferredFormat()) {
+                    // If the request comes from Turbo, set the content type as text/vnd.turbo-stream.html and only send the HTML to update
+                    $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+                    return $this->renderBlock('user/bank-account.stream.html.twig', 'append_bankaccount_stream', ['bankAccount' => $bankAccount]);
+                }
             }else{
                 $this->addFlash('error', "Erreur lors de l'ajout du compte bancaire.");
             }
@@ -228,9 +236,10 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_item', ['id' => $id]);
         } elseif ($form->isSubmitted()) {
             $this->addFlash('error', 'Veuillez corriger les erreurs dans le formulaire.');
+            // return $this->redirectToRoute('user_edit', ['id' => $id]);
         }
 
-        return $this->render('user/user-form.html.twig', [
+        return $this->render('user/user-edit.html.twig', [
             'page' => 'update',
             'user' => $user,
             'form' => $form->createView()
@@ -295,7 +304,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/user-form.html.twig', [
+        return $this->render('user/user-add.html.twig', [
             'page' => 'add',
             'form' => $form->createView()
         ]);

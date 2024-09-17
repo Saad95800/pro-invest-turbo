@@ -24,7 +24,6 @@ class UserType extends AbstractType
         $builder
             ->add('lastname', TextType::class, [
                 'label' => 'Votre Nom',
-                
                 'constraints' => [
                     new Length([
                         'min' => 2,
@@ -134,6 +133,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'csrf_protection' => false
         ]);
     }
 }

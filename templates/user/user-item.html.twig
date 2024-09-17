@@ -11,6 +11,7 @@
         <button type="button" class="btn pi-bg2 text-white ms-1" style="height: 39px;" data-bs-toggle="modal" data-bs-target="#withdrawModal">Retirer des fonds</a>
         {% endif %}
     </div>
+    <turbo-frame id="user-list">
     <div class="card mx-auto mt-5" style="max-width: 600px; min-height: 500px;">
         <div class="card-header text-center">
             {% if user.image %}
@@ -32,17 +33,19 @@
                 {% if bankAccounts is empty %}
                     <p>Aucun compte bancaire.</p>
                 {% endif %}
-                {% for bankAccount in bankAccounts %}
-                    <div class="d-flex align-items-center justify-content-between w-50 bg-lightgreen rounded-2 px-3 m-1">
-                        <span>{{ bankAccount.name }} - {{ bankAccount.firstname }} {{ bankAccount.lastname }}</span>
-                        <form method="post" action="{{ path('bank_account_delete', {id: bankAccount.id}) }}" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce compte bancaire ?');">
-                            <input type="hidden" name="_bank_account_token" value="{{ csrf_token('delete_bank_account_' ~ bankAccount.id) }}">
-                            <button class="btn">
-                                <i class="bi bi-x fs-4"></i>
-                            </button>
-                        </form>
-                    </div>
-                {% endfor %}
+                <div id="bank-accounts">
+                    {% for bankAccount in bankAccounts %}
+                        <div class="d-flex align-items-center justify-content-between w-50 bg-lightgreen rounded-2 px-3 m-1">
+                            <span>{{ bankAccount.name }} - {{ bankAccount.firstname }} {{ bankAccount.lastname }}</span>
+                            <form method="post" action="{{ path('bank_account_delete', {id: bankAccount.id}) }}" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce compte bancaire ?');">
+                                <input type="hidden" name="_bank_account_token" value="{{ csrf_token('delete_bank_account_' ~ bankAccount.id) }}">
+                                <button class="btn">
+                                    <i class="bi bi-x fs-4"></i>
+                                </button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
             <div>
                 <h3>Transactions financières</h3>
@@ -66,6 +69,7 @@
             </div>
         </div>
     </div>
+    </turbo-frame>
 </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -113,6 +117,7 @@
             });
         });
     </script>
+
 {% include 'user/bank-account-form.html.twig' %}
 
 {% include 'user/deposit-form.html.twig' %}

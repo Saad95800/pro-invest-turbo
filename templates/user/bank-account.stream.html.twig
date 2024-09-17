@@ -1,0 +1,47 @@
+{% block append_bankaccount_stream %}
+    <turbo-stream target="bank-accounts" action="append">
+        <template>
+            <div class="d-flex align-items-center justify-content-between w-50 bg-lightgreen rounded-2 px-3 m-1">
+                <span>{{ bankAccount.name }} - {{ bankAccount.firstname }} {{ bankAccount.lastname }}</span>
+                <form method="post" action="{{ path('bank_account_delete', {id: bankAccount.id}) }}" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce compte bancaire ?');">
+                    <input type="hidden" name="_bank_account_token" value="{{ csrf_token('delete_bank_account_' ~ bankAccount.id) }}">
+                    <button class="btn">
+                        <i class="bi bi-x fs-4"></i>
+                    </button>
+                </form>
+            </div>
+        </template>
+    </turbo-stream>
+{% endblock %}
+
+{% block prepend_bankaccount_stream %}
+    <turbo-stream target="bank-accounts" action="prepend">
+        <template>
+            <div class="d-flex align-items-center justify-content-between w-50 bg-lightgreen rounded-2 px-3 m-1">
+                <span>{{ bankAccount.name }} - {{ bankAccount.firstname }} {{ bankAccount.lastname }}</span>
+                <form method="post" action="{{ path('bank_account_delete', {id: bankAccount.id}) }}" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce compte bancaire ?');">
+                    <input type="hidden" name="_bank_account_token" value="{{ csrf_token('delete_bank_account_' ~ bankAccount.id) }}">
+                    <button class="btn">
+                        <i class="bi bi-x fs-4"></i>
+                    </button>
+                </form>
+            </div>
+        </template>
+    </turbo-stream>
+{% endblock %}
+
+{% block update_bankaccount_stream %}
+    <turbo-stream target="bank-accounts" action="update">
+        <template>
+            <div class="d-flex align-items-center justify-content-between w-50 bg-lightgreen rounded-2 px-3 m-1">
+                <span>{{ bankAccount.name }} - {{ bankAccount.firstname }} {{ bankAccount.lastname }}</span>
+                <form method="post" action="{{ path('bank_account_delete', {id: bankAccount.id}) }}" onsubmit="return confirm('Etes-vous sur de vouloir supprimer ce compte bancaire ?');">
+                    <input type="hidden" name="_bank_account_token" value="{{ csrf_token('delete_bank_account_' ~ bankAccount.id) }}">
+                    <button class="btn">
+                        <i class="bi bi-x fs-4"></i>
+                    </button>
+                </form>
+            </div>
+        </template>
+    </turbo-stream>
+{% endblock %}
